@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEU Library Admin</title>
+<link rel="stylesheet" href="dmnview.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-content">
+    <div class="brand">
+      <div class="logo-box">
+        <img src="https://upload.wikimedia.org/wikipedia/en/c/c6/New_Era_University.svg" 
+             alt="New Era University Logo"
+             style="width:40px; height:auto;">
+      </div>
+      <div>
+        <h1>NEU Library Admin</h1>
+        <p>Dashboard & Analytics</p>
+      </div>
+    </div>
+    <button class="btn btn-outline" onclick="location.href='index.html'">
+      <i data-lucide="log-out"></i> Logout
+    </button>
+  </div>
+</header>
+
+<main class="container">
+  <div class="dashboard-head">
+    <div>
+      <h2>Dashboard Overview</h2>
+      <p>Monitor library visitor statistics and trends</p>
+    </div>
+    <select id="timeFilter" class="select-input" onchange="filterVisits()">
+      <option value="day">Today</option>
+      <option value="week">Last 7 Days</option>
+      <option value="month">Last 30 Days</option>
+    </select>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card">
+      <div class="card-header-flex">
+        <span class="card-title">Total Visits</span>
+        <i data-lucide="users" class="icon-blue"></i>
+      </div>
+      <div class="card-body">
+        <div class="stat-value" id="stat-total">0</div>
+        <div class="stat-label text-green">
+          <i data-lucide="trending-up"></i> +0% from previous
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header-flex">
+        <span class="card-title">Unique Visitors</span>
+        <i data-lucide="users" class="icon-purple"></i>
+      </div>
+      <div class="card-body">
+        <div class="stat-value" id="stat-unique">0</div>
+        <div class="stat-label">Individual users</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header-flex">
+        <span class="card-title">Today's Visits</span>
+        <i data-lucide="calendar" class="icon-green"></i>
+      </div>
+      <div class="card-body">
+        <div class="stat-value" id="stat-today">0</div>
+        <div class="stat-label" id="current-date">Date</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="card">
+      <div class="card-header">
+        <h3>Visitors by Department</h3>
+      </div>
+      <div class="chart-container">
+        <canvas id="deptChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Purpose of Visit</h3>
+      </div>
+      <div class="chart-container">
+        <canvas id="purposeChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tabs-header">
+      <button class="tab-trigger active" onclick="switchTab('logs', event)">Visitor Logs</button>
+      <button class="tab-trigger" onclick="switchTab('users', event)">User Management</button>
+    </div>
+
+    <div id="logs-tab" class="tab-content active">
+      <div class="search-bar">
+        <i data-lucide="search"></i>
+        <input type="text" id="logSearch" placeholder="Search name, email, or department..." oninput="handleSearch()">
+      </div>
+      <div class="table-wrapper">
+        <table id="visitorTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Purpose</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="visitorLogsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="users-tab" class="tab-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userListBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- <script type="module" src="dmnview.js"></script> -->
+ <!-- <script type="module" src="js/dmnview.js"></script> -->
+  <script type="module" src="dmnview.js"></script>
+</body>
+</html>

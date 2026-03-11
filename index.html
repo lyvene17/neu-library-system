@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEU Library</title>
+<link rel="stylesheet" href="expage.css">
+</head>
+<body>
+
+<div class="container1" id="loginCard">
+  <div class="card">
+    <div class="card-header">
+      <img src="https://upload.wikimedia.org/wikipedia/en/c/c6/New_Era_University.svg" 
+           alt="NEU Logo" style="width:70px; margin-bottom:10px;">
+      <h1 class="log">NEU Library</h1>
+      <p class="subtitle">Visitor Management & Digital Logbook</p>
+    </div>
+
+    <div class="card-content">
+
+      <!-- SIGN IN FORM -->
+      <div id="signInForm">
+        <div class="form-group">
+          <label>Institutional Email</label>
+          <input type="email" placeholder="yourname@neu.edu.ph" id="loginEmail">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Enter your password" id="loginPassword">
+        </div>
+        <button type="button" onclick="handleLogin()">Sign In</button>
+        <p style="text-align:center; font-size:13px; margin-top:15px;">
+          Don't have an account? 
+          <a href="#" onclick="toggleForm('register')" style="color:#2563eb;">Register</a>
+        </p>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="registerForm" style="display:none;">
+        <div class="form-group">
+          <label>Institutional Email</label>
+          <input type="email" placeholder="yourname@neu.edu.ph" id="regEmail">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Create a password" id="regPassword">
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" placeholder="Confirm your password" id="regConfirm">
+        </div>
+        <button type="button" onclick="handleRegister()">Register</button>
+        <p style="text-align:center; font-size:13px; margin-top:15px;">
+          Already have an account? 
+          <a href="#" onclick="toggleForm('login')" style="color:#2563eb;">Sign In</a>
+        </p>
+      </div>
+
+      <p id="errorMsg" style="color:red; font-size:13px; text-align:center; margin-top:10px; display:none;"></p>
+      <p id="successMsg" style="color:green; font-size:13px; text-align:center; margin-top:10px; display:none;"></p>
+
+    </div>
+  </div>
+</div>
+
+<div class="container" id="visitForm" style="display:none">
+  <h2>Library Check-In</h2>
+
+  <label>Purpose of Visit</label>
+  <select id="purpose" class="scrollable-select">
+    <option>Study</option>
+    <option>Research</option>
+    <option>Borrow/Return Books</option>
+    <option>Use Computer</option>
+    <option>Student Lounge</option>
+    <option>Printing</option>
+  </select>
+
+  <label>College</label>
+  <select id="college">
+    <option>College of Accountancy</option>
+    <option>College of Agriculture</option>
+    <option>College of Arts and Sciences</option>
+    <option>College of Business Administration</option>
+    <option>College of Communication</option>
+    <option>College of Informatics and Computing Studies</option>
+    <option>College of Criminology</option>
+    <option>College of Education</option>
+    <option>College of Engineering and Architecture</option>
+    <option>College of Medical Technology</option>
+    <option>College of Midwifery</option>
+    <option>College of Music</option>
+    <option>College of Nursing</option>
+    <option>College of Physical Therapy</option>
+    <option>College of Respiratory Therapy</option>
+    <option>School of International Relations</option>
+    <option>College of Law</option>
+    <option>College of Medicine</option>
+  </select>
+  <button type="button" onclick="submitVisit()">Submit</button>
+
+  <div class="success-message" id="successMessage" style="display:none">
+    Welcome to NEU Library!
+  </div>
+</div>
+
+<script type="module" src="expage.js"></script>
+</body>
+</html>
