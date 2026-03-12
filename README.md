@@ -118,7 +118,7 @@ git clone https://github.com/lyvene17/neu-library-system.git
 - **Email:** Register using any @neu.edu.ph email 
 - **Password:** Create your own password during registration 
 
-## 📸 Screenshots
+## Screenshots
 
 ### Login Page
 ![Login](screenshots/login.png)
