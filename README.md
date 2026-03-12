@@ -142,7 +142,7 @@ git clone https://github.com/lyvene17/neu-library-system.git
 ![Search](screenshots/serachUser.png)
 
 ### User Management
-![User Management](screenshots/userManagement.png)## Screenshots
+![User Management](screenshots/userManagement.png)
 
 ### Login Page
 ![Login](screenshots/login.png)
