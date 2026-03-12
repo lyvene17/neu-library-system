@@ -111,12 +111,12 @@ git clone https://github.com/lyvene17/neu-library-system.git
 ## Test Credentials
 
 ### Admin Access
-Email: admin@neu.edu.ph 
-Password: qwerty123 
+- **Email:** admin@neu.edu.ph 
+- **Password:** qwerty123 
 
 ### Student Access
-Email: Register using any @neu.edu.ph email 
-Password: Create your own password during registration 
+- **Email:** Register using any @neu.edu.ph email 
+- **Password:** Create your own password during registration 
 
 ## 📸 Screenshots
 
