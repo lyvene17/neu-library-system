@@ -85,7 +85,6 @@ git clone https://github.com/lyvene17/neu-library-system.git
 ### Firestore Collections
 
 | Collection | Description |
-|---|---|
 | `visits` | Stores all visitor check-in records |
 | `blockedUsers` | Stores blocked user emails |
 
@@ -108,3 +107,61 @@ git clone https://github.com/lyvene17/neu-library-system.git
 - **Name:** Lyvene R. Sisit
 - **School:** New Era University
 - **College:** College of Informatics and Computing Studies
+
+## Test Credentials
+
+### Admin Access
+Email: admin@neu.edu.ph 
+Password: qwerty123 
+
+### Student Access
+Email: Register using any @neu.edu.ph email 
+Password: Create your own password during registration 
+
+## 📸 Screenshots
+
+### Login Page
+![Login](screenshots/login.png)
+
+### Register Page
+![Register](screenshots/register.png)
+
+### Check-in Form
+![Check-in](screenshots/checkin(1).png)
+
+### Admin Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Charts
+![Charts](screenshots/charts.png)
+
+### Visitor Logs
+![Visitor Logs](screenshots/visitorsLog.png)
+
+### Search User
+![Search](screenshots/serachUser.png)
+
+### User Management
+![User Management](screenshots/userManagement.png)## 📸 Screenshots
+
+### Login Page
+![Login](screenshots/login.png)
+
+### Register Page
+![Register](screenshots/register.png)
+
+### Check-in Form
+![Check-in](screenshots/checkin(1).png)
+![Check-in](screenshots/checkin(2).png)
+
+### Admin Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Charts
+![Charts](screenshots/charts.png)
+
+### Visitor Logs
+![Visitor Logs](screenshots/visitorsLog.png)
+
+### Search User
+![Search](screenshots/serachUser.png)
