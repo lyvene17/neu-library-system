@@ -128,6 +128,7 @@ git clone https://github.com/lyvene17/neu-library-system.git
 
 ### Check-in Form
 ![Check-in](screenshots/checkin(1).png)
+![Check-in](screenshots/checkin(2).png)
 
 ### Admin Dashboard
 ![Dashboard](screenshots/dashboard.png)
@@ -143,25 +144,3 @@ git clone https://github.com/lyvene17/neu-library-system.git
 
 ### User Management
 ![User Management](screenshots/userManagement.png)
-
-### Login Page
-![Login](screenshots/login.png)
-
-### Register Page
-![Register](screenshots/register.png)
-
-### Check-in Form
-![Check-in](screenshots/checkin(1).png)
-![Check-in](screenshots/checkin(2).png)
-
-### Admin Dashboard
-![Dashboard](screenshots/dashboard.png)
-
-### Charts
-![Charts](screenshots/charts.png)
-
-### Visitor Logs
-![Visitor Logs](screenshots/visitorsLog.png)
-
-### Search User
-![Search](screenshots/serachUser.png)
