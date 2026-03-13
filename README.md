@@ -102,12 +102,6 @@ git clone https://github.com/lyvene17/neu-library-system.git
 
 ---
 
-## Developer
-
-- **Name:** Lyvene R. Sisit
-- **School:** New Era University
-- **College:** College of Informatics and Computing Studies
-
 ## Test Credentials
 
 ### Admin Access
