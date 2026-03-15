@@ -15,7 +15,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let allVisits = [];
-let deptChart, purposeChart;
+let deptChart, programChart;
 
 // ------------------- Load Visits -------------------
 async function loadVisits() {
@@ -170,21 +170,29 @@ function createDeptChart(data) {
   if (deptChart) deptChart.destroy();
   deptChart = new Chart(ctx, {
     type: "bar",
-    data: { labels: Object.keys(data), datasets: [{ label: "Visitors", data: Object.values(data), backgroundColor: "#3b82f6" }] },
+    data: {
+      labels: Object.keys(data),
+      datasets: [{
+        label: "Visitors",
+        data: Object.values(data),
+        backgroundColor: "#3b82f6"
+      }]
+    },
     options: { responsive: true, maintainAspectRatio: false }
   });
 }
 
 function createProgramChart(data) {
   const ctx = document.getElementById("purposeChart").getContext("2d");
-  if (purposeChart) purposeChart.destroy();
-  purposeChart = new Chart(ctx, {
-    type: "doughnut",
+  if (programChart) programChart.destroy();
+  programChart = new Chart(ctx, {
+    type: "bar",
     data: {
       labels: Object.keys(data),
       datasets: [{
+        label: "Visitors",
         data: Object.values(data),
-        backgroundColor: ["#3b82f6","#8b5cf6","#ec4899","#f59e0b","#10b981","#ef4444","#06b6d4","#84cc16","#f97316","#6366f1"]
+        backgroundColor: "#8b5cf6"
       }]
     },
     options: { responsive: true, maintainAspectRatio: false }
