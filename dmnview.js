@@ -55,48 +55,104 @@ function updateStats(filtered = allVisits) {
 // ------------------- Render Logs -------------------
 function renderLogs(data) {
   const body = document.getElementById("visitorLogsBody");
-  body.innerHTML = data.map(log => `
-    <tr>
-      <td style="font-weight:500">${log.name}</td>
-      <td style="color:#6b7280">${log.email}</td>
-      <td>${log.department}</td>
-      <td>${log.course || "N/A"}</td>
-      <td><span class="badge">${log.purpose}</span></td>
-      <td style="color:#6b7280">${new Date(log.timestamp).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}</td>
-    </tr>
-  `).join("");
+
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    body.innerHTML = data.map(log => `
+      <tr class="mobile-card-row">
+        <td colspan="6" style="padding:0.5rem; border:none; background:transparent;">
+          <div class="log-card">
+            <div class="log-name">${log.name}</div>
+            <div class="log-email">${log.email}</div>
+            <div class="log-row">
+              <span class="log-dept">${log.department}</span>
+              <span class="badge">${log.purpose}</span>
+            </div>
+            <div class="log-row">
+              <span class="log-dept">${log.course || "N/A"}</span>
+              <span class="log-time">${new Date(log.timestamp).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+
+    // Hide table headers on mobile
+    document.querySelector("#visitorTable thead").classList.add("desktop-table");
+  } else {
+    document.querySelector("#visitorTable thead").classList.remove("desktop-table");
+    body.innerHTML = data.map(log => `
+      <tr>
+        <td style="font-weight:500">${log.name}</td>
+        <td style="color:#6b7280">${log.email}</td>
+        <td>${log.department}</td>
+        <td>${log.course || "N/A"}</td>
+        <td><span class="badge">${log.purpose}</span></td>
+        <td style="color:#6b7280">${new Date(log.timestamp).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}</td>
+      </tr>
+    `).join("");
+  }
 }
 
-// ------------------- Render Users -------------------
 function renderUsers() {
   const body = document.getElementById("userListBody");
   const uniqueUsers = {};
   allVisits.forEach(v => { uniqueUsers[v.email] = v.name; });
 
   const users = Object.keys(uniqueUsers);
+  const isMobile = window.innerWidth <= 768;
 
   Promise.all(users.map(async email => {
     const blockedDoc = await getDoc(doc(db, "blockedUsers", email));
     const isBlocked = blockedDoc.exists();
     return { email, name: uniqueUsers[email], isBlocked };
   })).then(usersWithStatus => {
-    body.innerHTML = usersWithStatus.map(user => `
-      <tr>
-        <td>${user.name}</td>
-        <td>${user.email}</td>
-        <td>
-          <span class="badge ${user.isBlocked ? 'badge-blocked' : 'badge-active'}">
-            ${user.isBlocked ? 'Blocked' : 'Active'}
-          </span>
-        </td>
-        <td class="text-right">
-          ${user.isBlocked
-            ? `<button class="btn btn-success" onclick="unblockUser('${user.email}')">Unblock</button>`
-            : `<button class="btn btn-danger" onclick="blockUser('${user.email}')">Block</button>`
-          }
-        </td>
-      </tr>
-    `).join("");
+
+    if (isMobile) {
+      // Hide table headers on mobile
+      document.querySelector("#users-tab thead").classList.add("desktop-table");
+      body.innerHTML = usersWithStatus.map(user => `
+        <tr>
+          <td colspan="4" style="padding:0.5rem; border:none; background:transparent;">
+            <div class="user-card">
+              <div class="user-info">
+                <div class="user-name">${user.name}</div>
+                <div class="user-email">${user.email}</div>
+              </div>
+              <div class="user-actions">
+                <span class="badge ${user.isBlocked ? 'badge-blocked' : 'badge-active'}">
+                  ${user.isBlocked ? 'Blocked' : 'Active'}
+                </span>
+                ${user.isBlocked
+                  ? `<button class="btn btn-success" onclick="unblockUser('${user.email}')">Unblock</button>`
+                  : `<button class="btn btn-danger" onclick="blockUser('${user.email}')">Block</button>`
+                }
+              </div>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    } else {
+      document.querySelector("#users-tab thead").classList.remove("desktop-table");
+      body.innerHTML = usersWithStatus.map(user => `
+        <tr>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>
+            <span class="badge ${user.isBlocked ? 'badge-blocked' : 'badge-active'}">
+              ${user.isBlocked ? 'Blocked' : 'Active'}
+            </span>
+          </td>
+          <td class="text-right">
+            ${user.isBlocked
+              ? `<button class="btn btn-success" onclick="unblockUser('${user.email}')">Unblock</button>`
+              : `<button class="btn btn-danger" onclick="blockUser('${user.email}')">Block</button>`
+            }
+          </td>
+        </tr>
+      `).join("");
+    }
   });
 }
 
