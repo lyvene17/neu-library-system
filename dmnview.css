@@ -235,3 +235,65 @@ td {
     color: #16a34a; 
     border: 1px solid #bbf7d0; 
 }
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+
+  .header-content {
+    padding: 0.75rem;
+  }
+
+  .brand h1 {
+    font-size: 0.95rem;
+  }
+
+  .container {
+    padding: 0 0.75rem;
+    margin: 1rem auto;
+  }
+
+  .dashboard-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  .tabs-header {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .tab-trigger {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+}
