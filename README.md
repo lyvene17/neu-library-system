@@ -129,9 +129,9 @@ git clone https://github.com/lyvene17/neu-library-system.git
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-### 🌐 Web View
+### Web View
 
 #### Login Page
 ![Login](screenshots/web%20view/login_web.png)
@@ -162,7 +162,7 @@ git clone https://github.com/lyvene17/neu-library-system.git
 
 ---
 
-### 📱 Mobile View
+### Mobile View
 
 #### Login Page
 ![Login Mobile](screenshots/mobile%20view/login_mobile.jpg)
