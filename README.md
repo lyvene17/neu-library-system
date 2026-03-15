@@ -131,62 +131,22 @@ git clone https://github.com/lyvene17/neu-library-system.git
 
 ## Screenshots
 
-### Web View
+![Login](screenshots/web-view/login_web.png)
+![Register](screenshots/web-view/registr_web.png)
+![Check-in](screenshots/web-view/checkin_web.png)
+![Success](screenshots/web-view/success_checkin_web.png)
+![Dashboard](screenshots/web-view/admindashboard.png)
+![Charts](screenshots/web-view/graphs.png)
+![Visitor Logs](screenshots/web-view/visitorlogs.png)
+![User Management](screenshots/web-view/usermanagement.png)
+![User Blocked](screenshots/web-view/userIsBlocked.png)
 
-#### Login Page
-![Login](screenshots/web%20view/login_web.png)
-
-#### Register Page
-![Register](screenshots/web%20view/registr_web.png)
-
-#### Check-in Form
-![Check-in](screenshots/web%20view/checkin_web.png)
-
-#### Check-in Success
-![Success](screenshots/web%20view/success_checkin_web.png)
-
-#### Admin Dashboard
-![Dashboard](screenshots/web%20view/admindashboard.png)
-
-#### Charts
-![Charts](screenshots/web%20view/graphs.png)
-
-#### Visitor Logs
-![Visitor Logs](screenshots/web%20view/visitorlogs.png)
-
-#### User Management
-![User Management](screenshots/web%20view/usermanagement.png)
-
-#### User Blocked
-![User Blocked](screenshots/web%20view/userIsBlocked.png)
-
----
-
-### Mobile View
-
-#### Login Page
-![Login Mobile](screenshots/mobile%20view/login_mobile.jpg)
-
-#### Register Page
-![Register Mobile](screenshots/mobile%20view/register_mobile.jpg)
-
-#### Check-in Form
-![Check-in Mobile](screenshots/mobile%20view/checkin_mobile.jpg)
-
-#### Check-in Success
-![Success Mobile](screenshots/mobile%20view/successCheckin.jpg)
-
-#### Admin Dashboard
-![Dashboard Mobile](screenshots/mobile%20view/dashboard.jpg)
-
-#### Charts
-![Charts Mobile](screenshots/mobile%20view/graphs.jpg)
-
-#### Visitor Logs
-![Visitor Logs Mobile](screenshots/mobile%20view/visitorlogs.jpg)
-
-#### User Management
-![User Management Mobile](screenshots/mobile%20view/usermanagement.jpg)
-
-#### User Blocked
-![User Blocked Mobile](screenshots/mobile%20view/userIsBlocked.jpg)
+![Login Mobile](screenshots/mobile-view/login_mobile.jpg)
+![Register Mobile](screenshots/mobile-view/register_mobile.jpg)
+![Check-in Mobile](screenshots/mobile-view/checkin_mobile.jpg)
+![Success Mobile](screenshots/mobile-view/successCheckin.jpg)
+![Dashboard Mobile](screenshots/mobile-view/dashboard.jpg)
+![Charts Mobile](screenshots/mobile-view/graphs.jpg)
+![Visitor Logs Mobile](screenshots/mobile-view/visitorlogs.jpg)
+![User Management Mobile](screenshots/mobile-view/usermanagement.jpg)
+![User Blocked Mobile](screenshots/mobile-view/userIsBlocked.jpg)
