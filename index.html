@@ -15,12 +15,15 @@
            alt="NEU Logo" style="width:70px; margin-bottom:10px;">
       <h1 class="log">NEU Library</h1>
       <p class="subtitle">Visitor Management & Digital Logbook</p>
+      <div id="qrcode" style="margin:15px auto; display:flex; justify-content:center;"></div>
+      <p style="text-align:center; font-size:12px; color:#666;">Scan to sign in on your phone</p>
     </div>
-
     <div class="card-content">
-
-      <!-- SIGN IN FORM -->
       <div id="signInForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Juan Dela Cruz" id="loginName">
+        </div>
         <div class="form-group">
           <label>Institutional Email</label>
           <input type="email" placeholder="yourname@neu.edu.ph" id="loginEmail">
@@ -35,8 +38,6 @@
           <a href="#" onclick="toggleForm('register')" style="color:#2563eb;">Register</a>
         </p>
       </div>
-
-      <!-- REGISTER FORM -->
       <div id="registerForm" style="display:none;">
         <div class="form-group">
           <label>Institutional Email</label>
@@ -56,10 +57,8 @@
           <a href="#" onclick="toggleForm('login')" style="color:#2563eb;">Sign In</a>
         </p>
       </div>
-
       <p id="errorMsg" style="color:red; font-size:13px; text-align:center; margin-top:10px; display:none;"></p>
       <p id="successMsg" style="color:green; font-size:13px; text-align:center; margin-top:10px; display:none;"></p>
-
     </div>
   </div>
 </div>
@@ -68,17 +67,19 @@
   <h2>Library Check-In</h2>
 
   <label>Purpose of Visit</label>
-  <select id="purpose" class="scrollable-select">
+  <select id="purpose">
     <option>Study</option>
     <option>Research</option>
     <option>Borrow/Return Books</option>
     <option>Use Computer</option>
     <option>Student Lounge</option>
     <option>Printing</option>
+    <option>Panata</option>
   </select>
 
   <label>College</label>
-  <select id="college">
+  <select id="college" onchange="updateCourses()">
+    <option value="">-- Select College --</option>
     <option>College of Accountancy</option>
     <option>College of Agriculture</option>
     <option>College of Arts and Sciences</option>
@@ -98,6 +99,12 @@
     <option>College of Law</option>
     <option>College of Medicine</option>
   </select>
+
+  <label>Course/Program</label>
+  <select id="course">
+    <option value="">-- Select College First --</option>
+  </select>
+
   <button type="button" onclick="submitVisit()">Submit</button>
 
   <div class="success-message" id="successMessage" style="display:none">
@@ -105,6 +112,14 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+new QRCode(document.getElementById("qrcode"), {
+    text: "https://neu-library-system-ffbc9.web.app/index.html",
+    width: 150,
+    height: 150
+});
+</script>
 <script type="module" src="expage.js"></script>
 </body>
 </html>
