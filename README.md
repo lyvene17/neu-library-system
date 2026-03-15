@@ -2,18 +2,22 @@
 
 A web-based library visitor management system for **New Era University** that allows students to check in and administrators to monitor visitor statistics in real-time.
 
+🔗 **Live Site:** https://lyvene17.github.io/neu-library-system/index.html
+
 ---
 
 ## Live Features
 
-- Student login & registration using NEU institutional email
-- Library check-in form (purpose of visit & college)
+- Student login & registration using NEU institutional email (@neu.edu.ph)
+- QR code on login page for easy mobile access
+- Library check-in form (purpose of visit, college & course/program)
 - Admin dashboard with real-time analytics
-- Visitors by department (bar chart)
-- Purpose of visit breakdown (doughnut chart)
-- Visitor logs with search functionality
-- User management — block/unblock users
+- Visitors by Department — bar chart
+- Visitors by Program — bar chart
+- Visitor logs with search functionality (name, email, department, course)
 - Time filter (Today, Last 7 Days, Last 30 Days)
+- User management — block/unblock users
+- Mobile responsive design
 
 ---
 
@@ -26,18 +30,24 @@ A web-based library visitor management system for **New Era University** that al
 | Firebase Firestore | Real-time database |
 | Chart.js | Analytics charts |
 | Lucide Icons | UI icons |
+| QRCode.js | QR code generation |
+| GitHub Pages | Web hosting |
 
 ---
 
 ## Project Structure
 ```
 neu-library/
-├── index.html        # Visitor login & registration page
+├── index.html        # Visitor login, registration & QR code page
 ├── expage.css        # Visitor page styles
 ├── expage.js         # Visitor page logic & Firebase auth
 ├── admin.html        # Admin dashboard
-├── dmnview.css       # Admin dashboard styles
-└── dmnview.js        # Admin logic, charts & Firestore queries
+├── dmnview.css       # Admin dashboard styles (with mobile responsive)
+├── dmnview.js        # Admin logic, charts & Firestore queries
+├── screenshots/
+│   ├── web view/     # Desktop screenshots
+│   └── mobile view/  # Mobile screenshots
+└── README.md
 ```
 
 ---
@@ -60,17 +70,17 @@ git clone https://github.com/lyvene17/neu-library-system.git
 ## User Flow
 
 ### Student
-1. Go to `index.html`
+1. Go to `index.html` or scan the QR code
 2. Register using `@neu.edu.ph` email
-3. Log in with email & password
-4. Fill in purpose of visit & college
+3. Log in with your full name, email & password
+4. Select purpose of visit, college and course/program
 5. Submit check-in
 
 ### Admin
 1. Go to `index.html`
 2. Log in with `admin@neu.edu.ph`
 3. Automatically redirected to `admin.html`
-4. View analytics, visitor logs, manage users
+4. View analytics, charts, visitor logs, manage users
 
 ---
 
@@ -85,7 +95,8 @@ git clone https://github.com/lyvene17/neu-library-system.git
 ### Firestore Collections
 
 | Collection | Description |
-| `visits` | Stores all visitor check-in records |
+|---|---|
+| `visits` | Stores all visitor check-in records (name, email, college, course, purpose, timestamp) |
 | `blockedUsers` | Stores blocked user emails |
 
 ---
@@ -96,45 +107,86 @@ git clone https://github.com/lyvene17/neu-library-system.git
 - **Unique Visitors** — individual users
 - **Today's Visits** — visits for the current day
 - **Visitors by Department** — bar chart
-- **Purpose of Visit** — doughnut chart
-- **Visitor Logs** — searchable table
-- **User Management** — block/unblock students
+- **Visitors by Program** — bar chart
+- **Visitor Logs** — searchable table (name, email, department, course, purpose, time)
+- **User Management** — block/unblock students with status badge
 
 ---
 
 ## Test Credentials
 
 ### Admin Access
-- **Email:** admin@neu.edu.ph 
-- **Password:** qwerty123 
+| Field | Value |
+|---|---|
+| Email | admin@neu.edu.ph |
+| Password | qwerty123 |
 
 ### Student Access
-- **Email:** Register using any @neu.edu.ph email 
-- **Password:** Create your own password during registration 
+| Field | Value |
+|---|---|
+| Email | Register using any @neu.edu.ph email |
+| Password | Create your own password during registration |
 
-## Screenshots
+---
 
-### Login Page
-![Login](screenshots/login.png)
+## 📸 Screenshots
 
-### Register Page
-![Register](screenshots/register.png)
+### 🌐 Web View
 
-### Check-in Form
-![Check-in](screenshots/checkin(1).png)
-![Check-in](screenshots/checkin(2).png)
+#### Login Page
+![Login](screenshots/web%20view/login_web.png)
 
-### Admin Dashboard
-![Dashboard](screenshots/dashboard.png)
+#### Register Page
+![Register](screenshots/web%20view/registr_web.png)
 
-### Charts
-![Charts](screenshots/charts.png)
+#### Check-in Form
+![Check-in](screenshots/web%20view/checkin_web.png)
 
-### Visitor Logs
-![Visitor Logs](screenshots/visitorsLog.png)
+#### Check-in Success
+![Success](screenshots/web%20view/success_checkin_web.png)
 
-### Search User
-![Search](screenshots/serachUser.png)
+#### Admin Dashboard
+![Dashboard](screenshots/web%20view/admindashboard.png)
 
-### User Management
-![User Management](screenshots/userManagement.png)
+#### Charts
+![Charts](screenshots/web%20view/graphs.png)
+
+#### Visitor Logs
+![Visitor Logs](screenshots/web%20view/visitorlogs.png)
+
+#### User Management
+![User Management](screenshots/web%20view/usermanagement.png)
+
+#### User Blocked
+![User Blocked](screenshots/web%20view/userIsBlocked.png)
+
+---
+
+### 📱 Mobile View
+
+#### Login Page
+![Login Mobile](screenshots/mobile%20view/login_mobile.jpg)
+
+#### Register Page
+![Register Mobile](screenshots/mobile%20view/register_mobile.jpg)
+
+#### Check-in Form
+![Check-in Mobile](screenshots/mobile%20view/checkin_mobile.jpg)
+
+#### Check-in Success
+![Success Mobile](screenshots/mobile%20view/successCheckin.jpg)
+
+#### Admin Dashboard
+![Dashboard Mobile](screenshots/mobile%20view/dashboard.jpg)
+
+#### Charts
+![Charts Mobile](screenshots/mobile%20view/graphs.jpg)
+
+#### Visitor Logs
+![Visitor Logs Mobile](screenshots/mobile%20view/visitorlogs.jpg)
+
+#### User Management
+![User Management Mobile](screenshots/mobile%20view/usermanagement.jpg)
+
+#### User Blocked
+![User Blocked Mobile](screenshots/mobile%20view/userIsBlocked.jpg)
