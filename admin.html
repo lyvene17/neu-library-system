@@ -42,10 +42,12 @@
         <option value="month">Last 30 Days</option>
         <option value="custom">Custom Range</option>
       </select>
-      <div id="customRange" style="display:none; gap:8px;">
-        <input type="date" id="startDate" class="select-input" onchange="filterVisits()">
-        <input type="date" id="endDate" class="select-input" onchange="filterVisits()">
-      </div>
+<div id="customRange" style="display:none; gap:8px; align-items:center; flex-wrap:wrap;">
+  <label style="font-size:13px; color:#6b7280; margin:0;">Start Date:</label>
+  <input type="date" id="startDate" class="select-input" onchange="filterVisits()">
+  <label style="font-size:13px; color:#6b7280; margin:0;">End Date:</label>
+  <input type="date" id="endDate" class="select-input" onchange="filterVisits()">
+</div>
       <select id="purposeFilter" class="select-input" onchange="filterVisits()">
         <option value="">All Purposes</option>
         <option>Study</option>
