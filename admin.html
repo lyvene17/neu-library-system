@@ -35,11 +35,54 @@
       <h2>Dashboard Overview</h2>
       <p>Monitor library visitor statistics and trends</p>
     </div>
-    <select id="timeFilter" class="select-input" onchange="filterVisits()">
-      <option value="day">Today</option>
-      <option value="week">Last 7 Days</option>
-      <option value="month">Last 30 Days</option>
-    </select>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+      <select id="timeFilter" class="select-input" onchange="filterVisits()">
+        <option value="day">Today</option>
+        <option value="week">Last 7 Days</option>
+        <option value="month">Last 30 Days</option>
+        <option value="custom">Custom Range</option>
+      </select>
+      <div id="customRange" style="display:none; gap:8px;">
+        <input type="date" id="startDate" class="select-input" onchange="filterVisits()">
+        <input type="date" id="endDate" class="select-input" onchange="filterVisits()">
+      </div>
+      <select id="purposeFilter" class="select-input" onchange="filterVisits()">
+        <option value="">All Purposes</option>
+        <option>Study</option>
+        <option>Research</option>
+        <option>Borrow/Return Books</option>
+        <option>Use Computer</option>
+        <option>Student Lounge</option>
+        <option>Printing</option>
+        <option>Panata</option>
+      </select>
+      <select id="collegeFilter" class="select-input" onchange="filterVisits()">
+        <option value="">All Colleges</option>
+        <option>College of Accountancy</option>
+        <option>College of Agriculture</option>
+        <option>College of Arts and Sciences</option>
+        <option>College of Business Administration</option>
+        <option>College of Communication</option>
+        <option>College of Informatics and Computing Studies</option>
+        <option>College of Criminology</option>
+        <option>College of Education</option>
+        <option>College of Engineering and Architecture</option>
+        <option>College of Medical Technology</option>
+        <option>College of Midwifery</option>
+        <option>College of Music</option>
+        <option>College of Nursing</option>
+        <option>College of Physical Therapy</option>
+        <option>College of Respiratory Therapy</option>
+        <option>School of International Relations</option>
+        <option>College of Law</option>
+        <option>College of Medicine</option>
+      </select>
+      <select id="visitorTypeFilter" class="select-input" onchange="filterVisits()">
+        <option value="">All Visitors</option>
+        <option value="student">Students</option>
+        <option value="employee">Employees</option>
+      </select>
+    </div>
   </div>
 
   <div class="stats-grid">
@@ -49,7 +92,7 @@
       </div>
       <div class="card-body">
         <div class="stat-value" id="stat-total">0</div>
-      <div class="stat-label">Total visitor records</div>
+        <div class="stat-label">Total visitor records</div>
       </div>
     </div>
     <div class="card">
@@ -105,14 +148,15 @@
       <div class="table-wrapper">
         <table id="visitorTable">
           <thead>
-<tr>
-  <th>Name</th>
-  <th>Email</th>
-  <th>Department</th>
-  <th>Course</th>
-  <th>Purpose</th>
-  <th>Time</th>
-</tr>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Course</th>
+              <th>Purpose</th>
+              <th>Type</th>
+              <th>Time</th>
+            </tr>
           </thead>
           <tbody id="visitorLogsBody"></tbody>
         </table>
@@ -138,6 +182,6 @@
 
 </main>
 
-  <script type="module" src="dmnview.js"></script>
+<script type="module" src="dmnview.js"></script>
 </body>
 </html>

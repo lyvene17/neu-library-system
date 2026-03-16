@@ -29,6 +29,7 @@ async function loadVisits() {
       department: data.college,
       course: data.course || "N/A",
       purpose: data.purposeOfVisit,
+      visitorType: data.visitorType || "student",
       timestamp: data.timestamp?.toDate ? data.timestamp.toDate() : new Date(data.timestamp)
     });
   });
@@ -55,13 +56,12 @@ function updateStats(filtered = allVisits) {
 // ------------------- Render Logs -------------------
 function renderLogs(data) {
   const body = document.getElementById("visitorLogsBody");
-
   const isMobile = window.innerWidth <= 768;
 
   if (isMobile) {
     body.innerHTML = data.map(log => `
       <tr class="mobile-card-row">
-        <td colspan="6" style="padding:0.5rem; border:none; background:transparent;">
+        <td colspan="7" style="padding:0.5rem; border:none; background:transparent;">
           <div class="log-card">
             <div class="log-name">${log.name}</div>
             <div class="log-email">${log.email}</div>
@@ -71,14 +71,17 @@ function renderLogs(data) {
             </div>
             <div class="log-row">
               <span class="log-dept">${log.course || "N/A"}</span>
+              <span class="badge ${log.visitorType === 'employee' ? 'badge-blocked' : 'badge-active'}">
+                ${log.visitorType === 'employee' ? 'Employee' : 'Student'}
+              </span>
+            </div>
+            <div class="log-row">
               <span class="log-time">${new Date(log.timestamp).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}</span>
             </div>
           </div>
         </td>
       </tr>
     `).join("");
-
-    // Hide table headers on mobile
     document.querySelector("#visitorTable thead").classList.add("desktop-table");
   } else {
     document.querySelector("#visitorTable thead").classList.remove("desktop-table");
@@ -89,12 +92,14 @@ function renderLogs(data) {
         <td>${log.department}</td>
         <td>${log.course || "N/A"}</td>
         <td><span class="badge">${log.purpose}</span></td>
+        <td><span class="badge ${log.visitorType === 'employee' ? 'badge-blocked' : 'badge-active'}">${log.visitorType === 'employee' ? 'Employee' : 'Student'}</span></td>
         <td style="color:#6b7280">${new Date(log.timestamp).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}</td>
       </tr>
     `).join("");
   }
 }
 
+// ------------------- Render Users -------------------
 function renderUsers() {
   const body = document.getElementById("userListBody");
   const uniqueUsers = {};
@@ -108,9 +113,7 @@ function renderUsers() {
     const isBlocked = blockedDoc.exists();
     return { email, name: uniqueUsers[email], isBlocked };
   })).then(usersWithStatus => {
-
     if (isMobile) {
-      // Hide table headers on mobile
       document.querySelector("#users-tab thead").classList.add("desktop-table");
       body.innerHTML = usersWithStatus.map(user => `
         <tr>
@@ -173,6 +176,9 @@ window.unblockUser = async function(email) {
 window.handleSearch = function() {
   const q = document.getElementById("logSearch").value.toLowerCase().trim();
   const filter = document.getElementById("timeFilter").value;
+  const purposeFilter = document.getElementById("purposeFilter")?.value;
+  const collegeFilter = document.getElementById("collegeFilter")?.value;
+  const visitorTypeFilter = document.getElementById("visitorTypeFilter")?.value;
   const now = new Date();
   let filtered = allVisits;
 
@@ -186,13 +192,18 @@ window.handleSearch = function() {
     filtered = allVisits.filter(v => new Date(v.timestamp) >= monthAgo);
   }
 
+  if (purposeFilter) filtered = filtered.filter(v => v.purpose === purposeFilter);
+  if (collegeFilter) filtered = filtered.filter(v => v.department === collegeFilter);
+  if (visitorTypeFilter) filtered = filtered.filter(v => (v.visitorType || "student") === visitorTypeFilter);
+
   if (q) {
     filtered = filtered.filter(v =>
       (v.name || "").toLowerCase().includes(q) ||
       (v.email || "").toLowerCase().includes(q) ||
       (v.department || "").toLowerCase().includes(q) ||
       (v.purpose || "").toLowerCase().includes(q) ||
-      (v.course || "").toLowerCase().includes(q)
+      (v.course || "").toLowerCase().includes(q) ||
+      (v.visitorType || "").toLowerCase().includes(q)
     );
   }
 
@@ -228,11 +239,7 @@ function createDeptChart(data) {
     type: "bar",
     data: {
       labels: Object.keys(data),
-      datasets: [{
-        label: "Visitors",
-        data: Object.values(data),
-        backgroundColor: "#3b82f6"
-      }]
+      datasets: [{ label: "Visitors", data: Object.values(data), backgroundColor: "#3b82f6" }]
     },
     options: { responsive: true, maintainAspectRatio: false }
   });
@@ -245,11 +252,7 @@ function createProgramChart(data) {
     type: "bar",
     data: {
       labels: Object.keys(data),
-      datasets: [{
-        label: "Visitors",
-        data: Object.values(data),
-        backgroundColor: "#8b5cf6"
-      }]
+      datasets: [{ label: "Visitors", data: Object.values(data), backgroundColor: "#8b5cf6" }]
     },
     options: { responsive: true, maintainAspectRatio: false }
   });
@@ -258,8 +261,14 @@ function createProgramChart(data) {
 // ------------------- Filter Visits -------------------
 window.filterVisits = function() {
   const filter = document.getElementById("timeFilter").value;
+  const purposeFilter = document.getElementById("purposeFilter")?.value;
+  const collegeFilter = document.getElementById("collegeFilter")?.value;
+  const visitorTypeFilter = document.getElementById("visitorTypeFilter")?.value;
   const now = new Date();
   let filtered = allVisits;
+
+  const customRange = document.getElementById("customRange");
+  customRange.style.display = filter === "custom" ? "flex" : "none";
 
   if (filter === "day") {
     filtered = allVisits.filter(v => new Date(v.timestamp).toDateString() === now.toDateString());
@@ -269,7 +278,23 @@ window.filterVisits = function() {
   } else if (filter === "month") {
     const monthAgo = new Date(); monthAgo.setDate(now.getDate() - 30);
     filtered = allVisits.filter(v => new Date(v.timestamp) >= monthAgo);
+  } else if (filter === "custom") {
+    const start = document.getElementById("startDate").value;
+    const end = document.getElementById("endDate").value;
+    if (start && end) {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      endDate.setHours(23, 59, 59);
+      filtered = allVisits.filter(v => {
+        const t = new Date(v.timestamp);
+        return t >= startDate && t <= endDate;
+      });
+    }
   }
+
+  if (purposeFilter) filtered = filtered.filter(v => v.purpose === purposeFilter);
+  if (collegeFilter) filtered = filtered.filter(v => v.department === collegeFilter);
+  if (visitorTypeFilter) filtered = filtered.filter(v => (v.visitorType || "student") === visitorTypeFilter);
 
   renderLogs(filtered);
   generateCharts(filtered);

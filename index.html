@@ -33,11 +33,24 @@
           <input type="password" placeholder="Enter your password" id="loginPassword">
         </div>
         <button type="button" onclick="handleLogin()">Sign In</button>
+
+        <div style="display:flex; align-items:center; margin:15px 0;">
+          <hr style="flex:1; border-color:#e5e7eb;">
+          <span style="padding:0 10px; color:#6b7280; font-size:13px;">or</span>
+          <hr style="flex:1; border-color:#e5e7eb;">
+        </div>
+
+        <button type="button" onclick="handleGoogleLogin()" style="background:white; color:#374151; border:1px solid #e5e7eb; display:flex; align-items:center; justify-content:center; gap:10px;">
+          <img src="https://www.google.com/favicon.ico" style="width:18px; height:18px;">
+          Sign in with Google
+        </button>
+
         <p style="text-align:center; font-size:13px; margin-top:15px;">
           Don't have an account? 
           <a href="#" onclick="toggleForm('register')" style="color:#2563eb;">Register</a>
         </p>
       </div>
+
       <div id="registerForm" style="display:none;">
         <div class="form-group">
           <label>Institutional Email</label>
@@ -57,8 +70,29 @@
           <a href="#" onclick="toggleForm('login')" style="color:#2563eb;">Sign In</a>
         </p>
       </div>
+
       <p id="errorMsg" style="color:red; font-size:13px; text-align:center; margin-top:10px; display:none;"></p>
       <p id="successMsg" style="color:green; font-size:13px; text-align:center; margin-top:10px; display:none;"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ROLE SELECTION -->
+<div class="container1" id="roleCard" style="display:none;">
+  <div class="card">
+    <div class="card-header">
+      <img src="https://upload.wikimedia.org/wikipedia/en/c/c6/New_Era_University.svg" 
+           alt="NEU Logo" style="width:70px; margin-bottom:10px;">
+      <h1 class="log">Welcome!</h1>
+      <p class="subtitle">How would you like to proceed?</p>
+    </div>
+    <div class="card-content">
+      <button type="button" onclick="proceedAsUser()" style="margin-bottom:10px;">
+        Enter as Visitor
+      </button>
+      <button type="button" onclick="proceedAsAdmin()" style="background:#1e3a6e;">
+        Enter as Admin
+      </button>
     </div>
   </div>
 </div>
@@ -77,33 +111,41 @@
     <option>Panata</option>
   </select>
 
-  <label>College</label>
-  <select id="college" onchange="updateCourses()">
-    <option value="">-- Select College --</option>
-    <option>College of Accountancy</option>
-    <option>College of Agriculture</option>
-    <option>College of Arts and Sciences</option>
-    <option>College of Business Administration</option>
-    <option>College of Communication</option>
-    <option>College of Informatics and Computing Studies</option>
-    <option>College of Criminology</option>
-    <option>College of Education</option>
-    <option>College of Engineering and Architecture</option>
-    <option>College of Medical Technology</option>
-    <option>College of Midwifery</option>
-    <option>College of Music</option>
-    <option>College of Nursing</option>
-    <option>College of Physical Therapy</option>
-    <option>College of Respiratory Therapy</option>
-    <option>School of International Relations</option>
-    <option>College of Law</option>
-    <option>College of Medicine</option>
+  <label>Visitor Type</label>
+  <select id="visitorType" onchange="updateVisitorType()">
+    <option value="student">Student</option>
+    <option value="employee">Employee (Teacher/Staff)</option>
   </select>
 
-  <label>Course/Program</label>
-  <select id="course">
-    <option value="">-- Select College First --</option>
-  </select>
+  <div id="studentFields">
+    <label>College</label>
+    <select id="college" onchange="updateCourses()">
+      <option value="">-- Select College --</option>
+      <option>College of Accountancy</option>
+      <option>College of Agriculture</option>
+      <option>College of Arts and Sciences</option>
+      <option>College of Business Administration</option>
+      <option>College of Communication</option>
+      <option>College of Informatics and Computing Studies</option>
+      <option>College of Criminology</option>
+      <option>College of Education</option>
+      <option>College of Engineering and Architecture</option>
+      <option>College of Medical Technology</option>
+      <option>College of Midwifery</option>
+      <option>College of Music</option>
+      <option>College of Nursing</option>
+      <option>College of Physical Therapy</option>
+      <option>College of Respiratory Therapy</option>
+      <option>School of International Relations</option>
+      <option>College of Law</option>
+      <option>College of Medicine</option>
+    </select>
+
+    <label>Course/Program</label>
+    <select id="course">
+      <option value="">-- Select College First --</option>
+    </select>
+  </div>
 
   <button type="button" onclick="submitVisit()">Submit</button>
 

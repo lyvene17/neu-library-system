@@ -4,7 +4,9 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
-  signOut
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { 
   getFirestore, 
@@ -27,10 +29,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
 
 let currentUser = null;
 
-// ------------------- COURSES PER COLLEGE -------------------
 const courseMap = {
   "College of Accountancy": ["BS Accountancy", "BS Accounting Information System"],
   "College of Agriculture": ["BS Agriculture"],
@@ -69,12 +71,14 @@ window.updateCourses = function() {
   });
 };
 
+window.updateVisitorType = function() {
+  const type = document.getElementById("visitorType").value;
+  document.getElementById("studentFields").style.display = type === "employee" ? "none" : "block";
+};
+
 function updateStatusMsg(id, msg, show) {
   const el = document.getElementById(id);
-  if (el) {
-    el.textContent = msg;
-    el.style.display = show ? "block" : "none";
-  }
+  if (el) { el.textContent = msg; el.style.display = show ? "block" : "none"; }
 }
 
 function showError(msg) {
@@ -87,9 +91,41 @@ function showSuccess(msg) {
   updateStatusMsg("errorMsg", "", false);
 }
 
+async function handleUserAfterLogin(user) {
+  const email = user.email;
+
+  const blockedSnap = await getDoc(doc(db, "blockedUsers", email));
+  if (blockedSnap.exists()) {
+    showError("You are blocked from accessing the library.");
+    await signOut(auth);
+    return;
+  }
+
+  const adminSnap = await getDoc(doc(db, "admins", email));
+  const isAdmin = adminSnap.exists() && adminSnap.data().isAdmin === true;
+
+  if (isAdmin) {
+    currentUser = user;
+    document.getElementById("loginCard").style.display = "none";
+    document.getElementById("roleCard").style.display = "block";
+  } else {
+    currentUser = user;
+    document.getElementById("loginCard").style.display = "none";
+    document.getElementById("visitForm").style.display = "block";
+  }
+}
+
+window.proceedAsUser = function() {
+  document.getElementById("roleCard").style.display = "none";
+  document.getElementById("visitForm").style.display = "block";
+};
+
+window.proceedAsAdmin = function() {
+  window.location.href = "admin.html";
+};
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ------------------- TOGGLE FORMS -------------------
   window.toggleForm = function(type) {
     const signIn = document.getElementById("signInForm");
     const register = document.getElementById("registerForm");
@@ -104,7 +140,47 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // ------------------- REGISTER -------------------
+  window.handleGoogleLogin = async function() {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const email = result.user.email;
+      if (!email.endsWith("@neu.edu.ph")) {
+        showError("Only @neu.edu.ph emails are allowed.");
+        await signOut(auth);
+        return;
+      }
+      await handleUserAfterLogin(result.user);
+    } catch (err) {
+      showError("Google login failed: " + err.message);
+    }
+  };
+
+  window.handleLogin = async function() {
+    const email = document.getElementById("loginEmail")?.value.trim();
+    const password = document.getElementById("loginPassword")?.value;
+    const enteredName = document.getElementById("loginName")?.value.trim();
+
+    if (!email || !email.endsWith("@neu.edu.ph")) {
+      showError("Only @neu.edu.ph emails are allowed.");
+      return;
+    }
+
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      currentUser = result.user;
+      if (enteredName) await updateProfile(currentUser, { displayName: enteredName });
+      await handleUserAfterLogin(currentUser);
+    } catch (err) {
+      const msgs = {
+        "auth/wrong-password": "Incorrect password.",
+        "auth/invalid-credential": "Incorrect login details.",
+        "auth/user-not-found": "No account found. Please register.",
+        "auth/too-many-requests": "Too many attempts. Wait a bit."
+      };
+      showError(msgs[err.code] || "Error: " + err.message);
+    }
+  };
+
   window.handleRegister = async function() {
     const email = document.getElementById("regEmail")?.value.trim();
     const password = document.getElementById("regPassword")?.value;
@@ -112,10 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!email || !email.endsWith("@neu.edu.ph")) {
       showError("Only @neu.edu.ph emails are allowed.");
-      return;
-    }
-    if (email === "admin@neu.edu.ph") {
-      showError("This email cannot be registered as a student.");
       return;
     }
     if (password.length < 6) {
@@ -136,63 +208,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // ------------------- SIGN IN -------------------
-  window.handleLogin = async function() {
-    const email = document.getElementById("loginEmail")?.value.trim();
-    const password = document.getElementById("loginPassword")?.value;
-    const enteredName = document.getElementById("loginName")?.value.trim();
-
-    if (!email || !email.endsWith("@neu.edu.ph")) {
-      showError("Only @neu.edu.ph emails are allowed.");
-      return;
-    }
-
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      currentUser = result.user;
-
-      if (enteredName) {
-        await updateProfile(currentUser, { displayName: enteredName });
-      }
-
-      if (email.toLowerCase() === "admin@neu.edu.ph") {
-        window.location.href = "admin.html";
-        return;
-      }
-
-      const blockedSnap = await getDoc(doc(db, "blockedUsers", email));
-      if (blockedSnap.exists()) {
-        showError("You are blocked from accessing the library.");
-        await signOut(auth);
-        return;
-      }
-
-      const loginCard = document.getElementById("loginCard");
-      const visitForm = document.getElementById("visitForm");
-      if (loginCard) loginCard.style.display = "none";
-      if (visitForm) visitForm.style.display = "block";
-
-    } catch (err) {
-      const msgs = {
-        "auth/wrong-password": "Incorrect password.",
-        "auth/invalid-credential": "Incorrect login details.",
-        "auth/user-not-found": "No account found. Please register.",
-        "auth/too-many-requests": "Too many attempts. Wait a bit."
-      };
-      showError(msgs[err.code] || "Error: " + err.message);
-    }
-  };
-
-  // ------------------- CHECK-IN -------------------
   window.submitVisit = async function() {
     if (!currentUser) return alert("Please log in first!");
 
     const purpose = document.getElementById("purpose")?.value;
-    const college = document.getElementById("college")?.value;
-    const course = document.getElementById("course")?.value;
+    const visitorType = document.getElementById("visitorType")?.value;
+    const college = visitorType === "employee" ? "N/A (Employee)" : document.getElementById("college")?.value;
+    const course = visitorType === "employee" ? "N/A (Employee)" : document.getElementById("course")?.value;
 
-    if (!college) { alert("Please select a college."); return; }
-    if (!course) { alert("Please select a course."); return; }
+    if (visitorType === "student" && !college) { alert("Please select a college."); return; }
+    if (visitorType === "student" && !course) { alert("Please select a course."); return; }
 
     try {
       await addDoc(collection(db, "visits"), {
@@ -201,6 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
         college: college,
         course: course,
         purposeOfVisit: purpose,
+        visitorType: visitorType,
         timestamp: new Date()
       });
 
@@ -211,6 +237,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       document.getElementById("purpose").selectedIndex = 0;
+      document.getElementById("visitorType").selectedIndex = 0;
+      document.getElementById("studentFields").style.display = "block";
       document.getElementById("college").selectedIndex = 0;
       document.getElementById("course").innerHTML = `<option value="">-- Select College First --</option>`;
 
