@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAD1nb7qoLpJG29VsNtKg3FnE5Egsz-9FY",
@@ -13,30 +13,31 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 let allVisits = [];
 let deptChart, programChart;
 
 // ------------------- Auth Guard -------------------
-document.addEventListener("DOMContentLoaded", () => {
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      window.location.href = "index.html";
-      return;
-    }
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "index.html";
+    return;
+  }
 
-    const adminSnap = await getDoc(doc(db, "admins", user.email));
-    if (!adminSnap.exists() || adminSnap.data().isAdmin !== true) {
-      alert("Access denied! Admins only.");
-      window.location.href = "index.html";
-      return;
-    }
+  const adminSnap = await getDoc(doc(db, "admins", user.email));
+  const isAdmin = adminSnap.exists() && adminSnap.data().isAdmin === true;
 
-    lucide.createIcons();
-    await loadVisits();
-  });
+  // Also allow admin@neu.edu.ph
+  if (!isAdmin && user.email !== "admin@neu.edu.ph") {
+    alert("Access denied! Admins only.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  lucide.createIcons();
+  await loadVisits();
 });
 
 // ------------------- Load Visits -------------------
@@ -246,7 +247,7 @@ function generateCharts(filtered = allVisits) {
   const courseCounts = {};
   filtered.forEach(v => {
     deptCounts[v.department] = (deptCounts[v.department] || 0) + 1;
-    if (v.course && v.course !== "N/A") {
+    if (v.course && v.course !== "N/A" && v.course !== "N/A (Employee)") {
       courseCounts[v.course] = (courseCounts[v.course] || 0) + 1;
     }
   });
