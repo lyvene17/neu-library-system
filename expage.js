@@ -73,7 +73,20 @@ window.updateCourses = function() {
 
 window.updateVisitorType = function() {
   const type = document.getElementById("visitorType").value;
-  document.getElementById("studentFields").style.display = type === "employee" ? "none" : "block";
+  const collegeLabel = document.getElementById("collegeLabel");
+  const courseField = document.getElementById("courseField");
+
+  if (type === "employee") {
+    // Show college but hide course
+    collegeLabel.textContent = "Department";
+    courseField.style.display = "none";
+    document.getElementById("studentFields").style.display = "block";
+  } else {
+    // Show both college and course
+    collegeLabel.textContent = "College";
+    courseField.style.display = "block";
+    document.getElementById("studentFields").style.display = "block";
+  }
 };
 
 function updateStatusMsg(id, msg, show) {
@@ -209,42 +222,43 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.submitVisit = async function() {
-    if (!currentUser) return alert("Please log in first!");
+  if (!currentUser) return alert("Please log in first!");
 
-    const purpose = document.getElementById("purpose")?.value;
-    const visitorType = document.getElementById("visitorType")?.value;
-    const college = visitorType === "employee" ? "N/A (Employee)" : document.getElementById("college")?.value;
-    const course = visitorType === "employee" ? "N/A (Employee)" : document.getElementById("course")?.value;
+  const purpose = document.getElementById("purpose")?.value;
+  const visitorType = document.getElementById("visitorType")?.value;
+  const college = document.getElementById("college")?.value;
+  const course = visitorType === "employee" ? "N/A (Employee)" : document.getElementById("course")?.value;
 
-    if (visitorType === "student" && !college) { alert("Please select a college."); return; }
-    if (visitorType === "student" && !course) { alert("Please select a course."); return; }
+  if (!college) { alert("Please select a college/department."); return; }
+  if (visitorType === "student" && !course) { alert("Please select a course."); return; }
 
-    try {
-      await addDoc(collection(db, "visits"), {
-        name: currentUser.displayName || currentUser.email,
-        email: currentUser.email,
-        college: college,
-        course: course,
-        purposeOfVisit: purpose,
-        visitorType: visitorType,
-        timestamp: new Date()
-      });
+  try {
+    await addDoc(collection(db, "visits"), {
+      name: currentUser.displayName || currentUser.email,
+      email: currentUser.email,
+      college: college,
+      course: course,
+      purposeOfVisit: purpose,
+      visitorType: visitorType,
+      timestamp: new Date()
+    });
 
-      const successEl = document.getElementById("successMessage");
-      if (successEl) {
-        successEl.style.display = "block";
-        setTimeout(() => { successEl.style.display = "none"; }, 3000);
-      }
-
-      document.getElementById("purpose").selectedIndex = 0;
-      document.getElementById("visitorType").selectedIndex = 0;
-      document.getElementById("studentFields").style.display = "block";
-      document.getElementById("college").selectedIndex = 0;
-      document.getElementById("course").innerHTML = `<option value="">-- Select College First --</option>`;
-
-    } catch (err) {
-      alert("Database Error: " + err.message);
+    const successEl = document.getElementById("successMessage");
+    if (successEl) {
+      successEl.style.display = "block";
+      setTimeout(() => { successEl.style.display = "none"; }, 3000);
     }
-  };
+
+    document.getElementById("purpose").selectedIndex = 0;
+    document.getElementById("visitorType").selectedIndex = 0;
+    collegeLabel.textContent = "College";
+    courseField.style.display = "block";
+    document.getElementById("college").selectedIndex = 0;
+    document.getElementById("course").innerHTML = `<option value="">-- Select College First --</option>`;
+
+  } catch (err) {
+    alert("Database Error: " + err.message);
+  }
+};
 
 });
