@@ -1,5 +1,29 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, setDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+const auth = getAuth(app);
+
+// ------------------- Auth Guard -------------------
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    // Not logged in → redirect to login
+    window.location.href = "index.html";
+    return;
+  }
+
+  const adminSnap = await getDoc(doc(db, "admins", user.email));
+  if (!adminSnap.exists() || adminSnap.data().isAdmin !== true) {
+    // Not an admin → redirect to login
+    alert("Access denied! Admins only.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  // Is admin → load dashboard
+  lucide.createIcons();
+  await loadVisits();
+});
 
 const firebaseConfig = {
   apiKey: "AIzaSyAD1nb7qoLpJG29VsNtKg3FnE5Egsz-9FY",
@@ -300,9 +324,3 @@ window.filterVisits = function() {
   generateCharts(filtered);
   updateStats(filtered);
 }
-
-// ------------------- Initialize -------------------
-document.addEventListener("DOMContentLoaded", async () => {
-  lucide.createIcons();
-  await loadVisits();
-});
