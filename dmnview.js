@@ -2,29 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebas
 import { getFirestore, collection, getDocs, doc, setDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
-const auth = getAuth(app);
-
-// ------------------- Auth Guard -------------------
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    // Not logged in → redirect to login
-    window.location.href = "index.html";
-    return;
-  }
-
-  const adminSnap = await getDoc(doc(db, "admins", user.email));
-  if (!adminSnap.exists() || adminSnap.data().isAdmin !== true) {
-    // Not an admin → redirect to login
-    alert("Access denied! Admins only.");
-    window.location.href = "index.html";
-    return;
-  }
-
-  // Is admin → load dashboard
-  lucide.createIcons();
-  await loadVisits();
-});
-
 const firebaseConfig = {
   apiKey: "AIzaSyAD1nb7qoLpJG29VsNtKg3FnE5Egsz-9FY",
   authDomain: "neu-library-system-ffbc9.firebaseapp.com",
@@ -37,9 +14,30 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 let allVisits = [];
 let deptChart, programChart;
+
+// ------------------- Auth Guard -------------------
+document.addEventListener("DOMContentLoaded", () => {
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "index.html";
+      return;
+    }
+
+    const adminSnap = await getDoc(doc(db, "admins", user.email));
+    if (!adminSnap.exists() || adminSnap.data().isAdmin !== true) {
+      alert("Access denied! Admins only.");
+      window.location.href = "index.html";
+      return;
+    }
+
+    lucide.createIcons();
+    await loadVisits();
+  });
+});
 
 // ------------------- Load Visits -------------------
 async function loadVisits() {
