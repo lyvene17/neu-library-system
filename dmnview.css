@@ -68,7 +68,7 @@ body {
   width: 48px; height: 48px;
   background: white;
   border-radius: 10px;
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }

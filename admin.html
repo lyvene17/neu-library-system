@@ -122,7 +122,6 @@
       <div class="stat-card">
         <div class="stat-card-header">
           <span class="card-title">Total Visits</span>
-          <div class="stat-icon blue"><i data-lucide="users"></i></div>
         </div>
         <div class="stat-value" id="stat-total">0</div>
         <div class="stat-label">Total visitor records</div>
@@ -130,7 +129,6 @@
       <div class="stat-card">
         <div class="stat-card-header">
           <span class="card-title">Unique Visitors</span>
-          <div class="stat-icon purple"><i data-lucide="user-check"></i></div>
         </div>
         <div class="stat-value" id="stat-unique">0</div>
         <div class="stat-label">Individual users</div>
@@ -138,7 +136,6 @@
       <div class="stat-card">
         <div class="stat-card-header">
           <span class="card-title">Today's Visits</span>
-          <div class="stat-icon green"><i data-lucide="calendar"></i></div>
         </div>
         <div class="stat-value" id="stat-today">0</div>
         <div class="stat-label" id="current-date">Date</div>
@@ -347,15 +344,9 @@
     <!-- ANALYTICS CHART TABS -->
     <div class="card">
       <div class="tabs-header">
-        <button class="tab-trigger active" onclick="switchAnalyticsTab('departments', event)">
-          <i data-lucide="bar-chart-2"></i> Departments
-        </button>
-        <button class="tab-trigger" onclick="switchAnalyticsTab('purposes', event)">
-          <i data-lucide="pie-chart"></i> Purposes
-        </button>
-        <button class="tab-trigger" onclick="switchAnalyticsTab('patterns', event)">
-          <i data-lucide="calendar"></i> Patterns
-        </button>
+        <button class="tab-trigger active" onclick="switchAnalyticsTab('departments', event)">Departments</button>
+        <button class="tab-trigger" onclick="switchAnalyticsTab('purposes', event)">Purposes</button>
+        <button class="tab-trigger" onclick="switchAnalyticsTab('patterns', event)">Patterns</button>
       </div>
 
       <div id="an-departments" class="tab-content active" style="padding:1.25rem;">
