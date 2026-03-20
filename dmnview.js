@@ -450,8 +450,16 @@ window.handleSearch = function() {
 window.toggleSidebar = function() {
   const sidebar = document.getElementById("sidebar");
   const main = document.querySelector(".main-content");
-  sidebar.classList.toggle("collapsed");
-  main.classList.toggle("sidebar-collapsed");
+  const overlay = document.getElementById("sidebarOverlay");
+  const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    sidebar.classList.toggle("mobile-open");
+    overlay.classList.toggle("show");
+  } else {
+    sidebar.classList.toggle("collapsed");
+    main.classList.toggle("sidebar-collapsed");
+  }
   lucide.createIcons();
 }
 window.switchUserTab = function(tab, el) {

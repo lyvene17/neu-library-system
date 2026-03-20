@@ -655,19 +655,49 @@ tbody tr:hover td { background: #f8fafc; }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    width: 60px;
-  }
+  .sidebar { width: 60px; }
 
   .sidebar-brand-text,
   .nav-item span,
   .logout-btn span,
   .brand-sub { display: none; }
 
-  .sidebar-brand { justify-content: center; padding: 14px 8px; }
+  .sidebar.collapsed .hamburger,
+  .hamburger { margin-left: 0; }
+
+  .sidebar-brand { justify-content: center; padding: 14px 8px; gap: 0; flex-direction: column; }
   .sidebar-logo { width: 36px; height: 36px; }
   .nav-item { justify-content: center; padding: 12px 8px; }
   .logout-btn { justify-content: center; padding: 12px 8px; }
+
+  /* On mobile, expanded sidebar overlays content */
+  .sidebar.mobile-open {
+    width: var(--sidebar-w);
+    position: fixed;
+    z-index: 300;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+  }
+
+  .sidebar.mobile-open .sidebar-brand-text,
+  .sidebar.mobile-open .nav-item span,
+  .sidebar.mobile-open .logout-btn span,
+  .sidebar.mobile-open .brand-sub { display: block; }
+
+  .sidebar.mobile-open .sidebar-brand { flex-direction: row; justify-content: flex-start; padding: 20px 16px; gap: 12px; }
+  .sidebar.mobile-open .hamburger { margin-left: auto; }
+  .sidebar.mobile-open .nav-item { justify-content: flex-start; padding: 10px 12px; }
+  .sidebar.mobile-open .logout-btn { justify-content: flex-start; padding: 10px 12px; }
+  .sidebar.mobile-open .sidebar-logo { width: 42px; height: 42px; }
+
+  /* Overlay backdrop */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 299;
+  }
+  .sidebar-overlay.show { display: block; }
 
   .main-content { margin-left: 60px; padding: 16px; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
