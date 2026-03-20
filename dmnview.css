@@ -51,9 +51,17 @@ body {
 .sidebar-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 20px 16px;
+  gap: 10px;
+  padding: 16px 12px;
   border-bottom: 1px solid var(--border);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sidebar-brand-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .sidebar-logo {
@@ -654,52 +662,36 @@ tbody tr:hover td { background: #f8fafc; }
   .charts-grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 768px) {
-  .sidebar { width: 60px; }
+/* Sidebar overlay backdrop (used on mobile) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 199;
+}
+.sidebar-overlay.show { display: block; }
 
-  .sidebar-brand-text,
-  .nav-item span,
-  .logout-btn span,
-  .brand-sub { display: none; }
-
-  .sidebar.collapsed .hamburger,
-  .hamburger { margin-left: 0; }
-
-  .sidebar-brand { justify-content: center; padding: 14px 8px; gap: 0; flex-direction: column; }
-  .sidebar-logo { width: 36px; height: 36px; }
-  .nav-item { justify-content: center; padding: 12px 8px; }
-  .logout-btn { justify-content: center; padding: 12px 8px; }
-
-  /* On mobile, expanded sidebar overlays content */
-  .sidebar.mobile-open {
+@media (max-width: 600px) {
+  /* On small screens sidebar is hidden off-screen by default */
+  .sidebar {
+    left: calc(-1 * var(--sidebar-w));
     width: var(--sidebar-w);
-    position: fixed;
+    transition: left 0.25s ease, width 0.25s ease;
+  }
+
+  /* Slide in when mobile-open */
+  .sidebar.mobile-open {
+    left: 0;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.18);
     z-index: 300;
-    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
   }
 
-  .sidebar.mobile-open .sidebar-brand-text,
-  .sidebar.mobile-open .nav-item span,
-  .sidebar.mobile-open .logout-btn span,
-  .sidebar.mobile-open .brand-sub { display: block; }
-
-  .sidebar.mobile-open .sidebar-brand { flex-direction: row; justify-content: flex-start; padding: 20px 16px; gap: 12px; }
-  .sidebar.mobile-open .hamburger { margin-left: auto; }
-  .sidebar.mobile-open .nav-item { justify-content: flex-start; padding: 10px 12px; }
-  .sidebar.mobile-open .logout-btn { justify-content: flex-start; padding: 10px 12px; }
-  .sidebar.mobile-open .sidebar-logo { width: 42px; height: 42px; }
-
-  /* Overlay backdrop */
-  .sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 299;
+  .main-content {
+    margin-left: 0 !important;
+    padding: 16px;
   }
-  .sidebar-overlay.show { display: block; }
 
-  .main-content { margin-left: 60px; padding: 16px; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .page-header { flex-direction: column; align-items: flex-start; }
   .filters-row { width: 100%; }

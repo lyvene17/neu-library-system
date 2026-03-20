@@ -451,7 +451,7 @@ window.toggleSidebar = function() {
   const sidebar = document.getElementById("sidebar");
   const main = document.querySelector(".main-content");
   const overlay = document.getElementById("sidebarOverlay");
-  const isMobile = window.innerWidth <= 768;
+  const isMobile = window.innerWidth <= 600;
 
   if (isMobile) {
     sidebar.classList.toggle("mobile-open");
