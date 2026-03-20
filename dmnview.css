@@ -623,8 +623,7 @@ tbody tr:hover td { background: #f8fafc; }
 
 .sidebar.collapsed .sidebar-brand-text,
 .sidebar.collapsed .nav-item span,
-.sidebar.collapsed .logout-btn span,
-.sidebar.collapsed .brand-sub {
+.sidebar.collapsed .logout-btn span {
   display: none;
 }
 
@@ -633,12 +632,12 @@ tbody tr:hover td { background: #f8fafc; }
   padding: 14px 8px;
 }
 
-.sidebar.collapsed .hamburger {
-  margin-left: 0;
+.sidebar.collapsed .sidebar-logo {
+  display: none;
 }
 
-.sidebar.collapsed .sidebar-logo {
-  width: 36px; height: 36px;
+.sidebar.collapsed .hamburger {
+  margin-left: 0;
 }
 
 .sidebar.collapsed .nav-item {
