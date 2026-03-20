@@ -10,48 +10,54 @@
 </head>
 <body>
 
-<header class="header">
-  <div class="header-content">
-    <div class="brand">
-      <div class="logo-box">
-        <img src="https://upload.wikimedia.org/wikipedia/en/c/c6/New_Era_University.svg" 
-             alt="NEU Logo" style="width:40px; height:auto;">
-      </div>
-      <div>
-        <h1>NEU Library Admin</h1>
-        <p>Dashboard & Analytics</p>
-      </div>
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/en/c/c6/New_Era_University.svg" alt="NEU Logo">
     </div>
-    <button class="btn btn-outline" onclick="location.href='index.html'">
-      <i data-lucide="log-out"></i> Logout
+    <div class="sidebar-brand-text">
+      <span class="brand-name">NEU Library</span>
+      <span class="brand-sub">Admin Portal</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item active" onclick="switchMainTab('dashboard', this)">
+      <i data-lucide="layout-dashboard"></i>
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item" onclick="switchMainTab('logs', this)">
+      <i data-lucide="clipboard-list"></i>
+      <span>Visitor Logs</span>
+    </a>
+    <a class="nav-item" onclick="switchMainTab('users', this)">
+      <i data-lucide="users"></i>
+      <span>User Management</span>
+    </a>
+    <a class="nav-item" onclick="switchMainTab('analytics', this)">
+      <i data-lucide="bar-chart-2"></i>
+      <span>Analytics</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="location.href='index.html'">
+      <i data-lucide="log-out"></i>
+      <span>Logout</span>
     </button>
   </div>
-</header>
+</aside>
 
-<main class="container">
-
-  <!-- MAIN TABS -->
-  <div class="main-tabs">
-    <button class="main-tab active" onclick="switchMainTab('dashboard', event)">
-      <i data-lucide="layout-dashboard"></i> Dashboard
-    </button>
-    <button class="main-tab" onclick="switchMainTab('analytics', event)">
-      <i data-lucide="bar-chart-2"></i> Analytics
-    </button>
-    <button class="main-tab" onclick="switchMainTab('logs', event)">
-      <i data-lucide="list"></i> Visitor Logs
-    </button>
-    <button class="main-tab" onclick="switchMainTab('users', event)">
-      <i data-lucide="users"></i> User Management
-    </button>
-  </div>
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<main class="main-content">
 
   <!-- ── DASHBOARD TAB ── -->
   <div id="tab-dashboard" class="main-tab-content active">
-    <div class="dashboard-head">
+    <div class="page-header">
       <div>
-        <h2>Dashboard Overview</h2>
-        <p>Monitor library visitor statistics and trends</p>
+        <h2 class="page-title">Dashboard Overview</h2>
+        <p class="page-sub">Monitor library visitor statistics and trends</p>
       </div>
       <div class="filters-row">
         <select id="timeFilter" class="select-input" onchange="filterVisits()">
@@ -61,9 +67,9 @@
           <option value="custom">Custom Range</option>
         </select>
         <div id="customRange" style="display:none; gap:8px; align-items:center; flex-wrap:wrap;">
-          <label style="font-size:13px; color:#6b7280; margin:0;">Start Date:</label>
+          <label style="font-size:13px; color:#6b7280; margin:0;">Start:</label>
           <input type="date" id="startDate" class="select-input" onchange="filterVisits()">
-          <label style="font-size:13px; color:#6b7280; margin:0;">End Date:</label>
+          <label style="font-size:13px; color:#6b7280; margin:0;">End:</label>
           <input type="date" id="endDate" class="select-input" onchange="filterVisits()">
         </div>
         <select id="purposeFilter" class="select-input" onchange="filterVisits()">
@@ -107,7 +113,7 @@
 
     <!-- STATS -->
     <div class="stats-grid">
-      <div class="card stat-card">
+      <div class="stat-card">
         <div class="stat-card-header">
           <span class="card-title">Total Visits</span>
           <div class="stat-icon blue"><i data-lucide="users"></i></div>
@@ -115,7 +121,7 @@
         <div class="stat-value" id="stat-total">0</div>
         <div class="stat-label">Total visitor records</div>
       </div>
-      <div class="card stat-card">
+      <div class="stat-card">
         <div class="stat-card-header">
           <span class="card-title">Unique Visitors</span>
           <div class="stat-icon purple"><i data-lucide="user-check"></i></div>
@@ -123,7 +129,7 @@
         <div class="stat-value" id="stat-unique">0</div>
         <div class="stat-label">Individual users</div>
       </div>
-      <div class="card stat-card">
+      <div class="stat-card">
         <div class="stat-card-header">
           <span class="card-title">Today's Visits</span>
           <div class="stat-icon green"><i data-lucide="calendar"></i></div>
@@ -155,114 +161,13 @@
     </div>
   </div>
 
-  <!-- ── ANALYTICS TAB ── -->
-  <div id="tab-analytics" class="main-tab-content">
-    <div class="dashboard-head">
-      <div>
-        <h2>Analytics & Insights</h2>
-        <p>Detailed visitor patterns and trends</p>
-      </div>
-      <select id="analyticsFilter" class="select-input" onchange="renderAnalytics()">
-        <option value="week">Last 7 Days</option>
-        <option value="month" selected>Last 30 Days</option>
-        <option value="quarter">Last 3 Months</option>
-        <option value="year">Last Year</option>
-      </select>
-    </div>
-
-    <!-- ANALYTICS STATS -->
-    <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px,1fr));">
-      <div class="card stat-card">
-        <div class="stat-card-header"><span class="card-title">Total Visits</span></div>
-        <div class="stat-value" id="an-total">0</div>
-      </div>
-      <div class="card stat-card">
-        <div class="stat-card-header"><span class="card-title">Unique Visitors</span></div>
-        <div class="stat-value" id="an-unique">0</div>
-      </div>
-      <div class="card stat-card">
-        <div class="stat-card-header"><span class="card-title">Avg. Daily Visits</span></div>
-        <div class="stat-value" id="an-avg">0</div>
-      </div>
-      <div class="card stat-card">
-        <div class="stat-card-header"><span class="card-title">Most Active College</span></div>
-        <div class="stat-value" style="font-size:1rem;" id="an-top-college">—</div>
-        <div class="stat-label" id="an-top-college-count"></div>
-      </div>
-    </div>
-
-    <!-- ANALYTICS CHART TABS -->
-    <div class="card">
-      <div class="tabs-header">
-        <button class="tab-trigger active" onclick="switchAnalyticsTab('trends', event)">
-          <i data-lucide="trending-up"></i> Trends
-        </button>
-        <button class="tab-trigger" onclick="switchAnalyticsTab('departments', event)">
-          <i data-lucide="bar-chart-2"></i> Departments
-        </button>
-        <button class="tab-trigger" onclick="switchAnalyticsTab('purposes', event)">
-          <i data-lucide="pie-chart"></i> Purposes
-        </button>
-        <button class="tab-trigger" onclick="switchAnalyticsTab('patterns', event)">
-          <i data-lucide="calendar"></i> Patterns
-        </button>
-      </div>
-
-      <div id="an-trends" class="tab-content active" style="padding:1.25rem;">
-        <h3 style="margin:0 0 1rem;">Visitor Trend</h3>
-        <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Daily visitor count over the selected period</p>
-        <div style="height:350px;"><canvas id="trendChart"></canvas></div>
-      </div>
-
-      <div id="an-departments" class="tab-content" style="padding:1.25rem;">
-        <h3 style="margin:0 0 1rem;">Visitors by College/Department</h3>
-        <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Distribution of visitors across different colleges</p>
-        <div style="height:400px;"><canvas id="anDeptChart"></canvas></div>
-      </div>
-
-      <div id="an-purposes" class="tab-content" style="padding:1.25rem;">
-        <div class="charts-grid">
-          <div>
-            <h3 style="margin:0 0 0.5rem;">Purpose Distribution</h3>
-            <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Why visitors come to the library</p>
-            <div style="height:300px;"><canvas id="purposePieChart"></canvas></div>
-          </div>
-          <div>
-            <h3 style="margin:0 0 0.5rem;">Purpose Breakdown</h3>
-            <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Detailed visitor purpose statistics</p>
-            <div id="purposeBreakdown"></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="an-patterns" class="tab-content" style="padding:1.25rem;">
-        <div class="charts-grid" style="margin-bottom:1.5rem;">
-          <div>
-            <h3 style="margin:0 0 0.5rem;">Peak Hours</h3>
-            <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Busiest times of the day</p>
-            <div style="height:250px;"><canvas id="peakHoursChart"></canvas></div>
-          </div>
-          <div>
-            <h3 style="margin:0 0 0.5rem;">Day of Week</h3>
-            <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Visitor patterns by day</p>
-            <div style="height:250px;"><canvas id="dayOfWeekChart"></canvas></div>
-          </div>
-        </div>
-        <div class="insights-grid" id="insightsGrid"></div>
-      </div>
-    </div>
-  </div>
-
   <!-- ── VISITOR LOGS TAB ── -->
   <div id="tab-logs" class="main-tab-content">
-    <div class="dashboard-head">
+    <div class="page-header">
       <div>
-        <h2>Visitor Logs</h2>
-        <p>Search and view all library check-in records</p>
+        <h2 class="page-title">Visitor Logs</h2>
+        <p class="page-sub">Search and view all library check-in records</p>
       </div>
-      <button class="btn btn-outline" onclick="exportCSV()">
-        <i data-lucide="download"></i> Export CSV
-      </button>
     </div>
 
     <div class="card">
@@ -318,26 +223,25 @@
 
   <!-- ── USER MANAGEMENT TAB ── -->
   <div id="tab-users" class="main-tab-content">
-    <div class="dashboard-head">
+    <div class="page-header">
       <div>
-        <h2>User Management</h2>
-        <p>Manage user access and permissions</p>
+        <h2 class="page-title">User Management</h2>
+        <p class="page-sub">Manage user access and permissions</p>
       </div>
     </div>
 
-    <!-- USER STATS -->
     <div class="stats-grid">
-      <div class="card stat-card">
+      <div class="stat-card">
         <div class="stat-card-header"><span class="card-title">Total Users</span></div>
         <div class="stat-value" id="stat-total-users">0</div>
         <div class="stat-label">Registered users</div>
       </div>
-      <div class="card stat-card">
+      <div class="stat-card">
         <div class="stat-card-header"><span class="card-title">Active Users</span></div>
         <div class="stat-value green-text" id="stat-active-users">0</div>
         <div class="stat-label">Can access library</div>
       </div>
-      <div class="card stat-card">
+      <div class="stat-card">
         <div class="stat-card-header"><span class="card-title">Blocked Users</span></div>
         <div class="stat-value red-text" id="stat-blocked-users">0</div>
         <div class="stat-label">Access denied</div>
@@ -363,10 +267,7 @@
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th class="text-right">Actions</th>
+                  <th>Name</th><th>Email</th><th>Status</th><th class="text-right">Actions</th>
                 </tr>
               </thead>
               <tbody id="activeUsersBody"></tbody>
@@ -386,16 +287,111 @@
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th class="text-right">Actions</th>
+                  <th>Name</th><th>Email</th><th>Status</th><th class="text-right">Actions</th>
                 </tr>
               </thead>
               <tbody id="blockedUsersBody"></tbody>
             </table>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ANALYTICS TAB ── -->
+  <div id="tab-analytics" class="main-tab-content">
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">Analytics & Insights</h2>
+        <p class="page-sub">Detailed visitor patterns and trends</p>
+      </div>
+      <select id="analyticsFilter" class="select-input" onchange="renderAnalytics()">
+        <option value="week">Last 7 Days</option>
+        <option value="month" selected>Last 30 Days</option>
+        <option value="quarter">Last 3 Months</option>
+        <option value="year">Last Year</option>
+      </select>
+    </div>
+
+    <!-- ANALYTICS STATS -->
+    <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px,1fr));">
+      <div class="stat-card">
+        <div class="stat-card-header"><span class="card-title">Total Visits</span></div>
+        <div class="stat-value" id="an-total">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header"><span class="card-title">Unique Visitors</span></div>
+        <div class="stat-value" id="an-unique">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header"><span class="card-title">Avg. Daily Visits</span></div>
+        <div class="stat-value" id="an-avg">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header"><span class="card-title">Most Active College</span></div>
+        <div class="stat-value" style="font-size:1rem;" id="an-top-college">—</div>
+        <div class="stat-label" id="an-top-college-count"></div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS CHART TABS -->
+    <div class="card">
+      <div class="tabs-header">
+        <button class="tab-trigger active" onclick="switchAnalyticsTab('trends', event)">
+          <i data-lucide="trending-up"></i> Trends
+        </button>
+        <button class="tab-trigger" onclick="switchAnalyticsTab('departments', event)">
+          <i data-lucide="bar-chart-2"></i> Departments
+        </button>
+        <button class="tab-trigger" onclick="switchAnalyticsTab('purposes', event)">
+          <i data-lucide="pie-chart"></i> Purposes
+        </button>
+        <button class="tab-trigger" onclick="switchAnalyticsTab('patterns', event)">
+          <i data-lucide="calendar"></i> Patterns
+        </button>
+      </div>
+
+      <div id="an-trends" class="tab-content active" style="padding:1.25rem;">
+        <h3 style="margin:0 0 0.25rem;">Visitor Trend</h3>
+        <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Daily visitor count over the selected period</p>
+        <div style="height:350px;"><canvas id="trendChart"></canvas></div>
+      </div>
+
+      <div id="an-departments" class="tab-content" style="padding:1.25rem;">
+        <h3 style="margin:0 0 0.25rem;">Visitors by College/Department</h3>
+        <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Distribution across different colleges</p>
+        <div style="height:400px;"><canvas id="anDeptChart"></canvas></div>
+      </div>
+
+      <div id="an-purposes" class="tab-content" style="padding:1.25rem;">
+        <div class="charts-grid">
+          <div>
+            <h3 style="margin:0 0 0.25rem;">Purpose Distribution</h3>
+            <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Why visitors come to the library</p>
+            <div style="height:300px;"><canvas id="purposePieChart"></canvas></div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 0.25rem;">Purpose Breakdown</h3>
+            <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Detailed visitor purpose statistics</p>
+            <div id="purposeBreakdown"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="an-patterns" class="tab-content" style="padding:1.25rem;">
+        <div class="charts-grid" style="margin-bottom:1.5rem;">
+          <div>
+            <h3 style="margin:0 0 0.25rem;">Peak Hours</h3>
+            <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Busiest times of the day</p>
+            <div style="height:250px;"><canvas id="peakHoursChart"></canvas></div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 0.25rem;">Day of Week</h3>
+            <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Visitor patterns by day</p>
+            <div style="height:250px;"><canvas id="dayOfWeekChart"></canvas></div>
+          </div>
+        </div>
+        <div class="insights-grid" id="insightsGrid"></div>
       </div>
     </div>
   </div>
