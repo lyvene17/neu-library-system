@@ -21,7 +21,7 @@ let allVisits = [];
 let filteredVisits = [];
 let currentPage = 1;
 const PAGE_SIZE = 15;
-let deptChart, programChart, trendChart, anDeptChart, purposePieChart, peakChart, dowChart;
+let deptChart, programChart, anDeptChart, purposePieChart, peakChart, dowChart;
 
 const COLORS = ["#3b82f6","#8b5cf6","#ec4899","#f59e0b","#10b981","#06b6d4","#6366f1","#84cc16","#ef4444","#f97316"];
 
@@ -167,15 +167,14 @@ window.renderAnalytics = function(data) {
   const total = filtered.length;
   const unique = new Set(filtered.map(v => v.email)).size;
 
-  // Trend
+  // Avg daily visits
   const days = {};
   filtered.forEach(v => {
     const d = new Date(v.timestamp).toLocaleDateString("en-US", { month:"short", day:"numeric" });
     days[d] = (days[d] || 0) + 1;
   });
-  const trendLabels = Object.keys(days);
-  const trendValues = Object.values(days);
-  const avg = trendLabels.length > 0 ? Math.round(total / trendLabels.length) : 0;
+  const dayCount = Object.keys(days).length;
+  const avg = dayCount > 0 ? Math.round(total / dayCount) : 0;
 
   // Dept
   const deptCounts = {};
@@ -187,31 +186,6 @@ window.renderAnalytics = function(data) {
   document.getElementById("an-avg").innerText = avg;
   document.getElementById("an-top-college").innerText = topCollege ? topCollege[0].replace("College of ", "") : "—";
   document.getElementById("an-top-college-count").innerText = topCollege ? `${topCollege[1]} visits` : "";
-
-  // Trend chart
-  const ctx = document.getElementById("trendChart").getContext("2d");
-  if (trendChart) trendChart.destroy();
-  trendChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: trendLabels,
-      datasets: [{
-        label: "Visitors",
-        data: trendValues,
-        borderColor: "#3b82f6",
-        backgroundColor: "rgba(59,130,246,0.08)",
-        tension: 0.3,
-        fill: true,
-        pointRadius: 3,
-        pointBackgroundColor: "#3b82f6"
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { x: { grid: { display: false } }, y: { grid: { color: "#f1f5f9" }, beginAtZero: true } }
-    }
-  });
 
   // Dept chart (analytics)
   const ctx2 = document.getElementById("anDeptChart").getContext("2d");

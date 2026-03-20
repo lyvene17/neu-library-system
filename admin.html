@@ -337,10 +337,7 @@
     <!-- ANALYTICS CHART TABS -->
     <div class="card">
       <div class="tabs-header">
-        <button class="tab-trigger active" onclick="switchAnalyticsTab('trends', event)">
-          <i data-lucide="trending-up"></i> Trends
-        </button>
-        <button class="tab-trigger" onclick="switchAnalyticsTab('departments', event)">
+        <button class="tab-trigger active" onclick="switchAnalyticsTab('departments', event)">
           <i data-lucide="bar-chart-2"></i> Departments
         </button>
         <button class="tab-trigger" onclick="switchAnalyticsTab('purposes', event)">
@@ -351,13 +348,7 @@
         </button>
       </div>
 
-      <div id="an-trends" class="tab-content active" style="padding:1.25rem;">
-        <h3 style="margin:0 0 0.25rem;">Visitor Trend</h3>
-        <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Daily visitor count over the selected period</p>
-        <div style="height:350px;"><canvas id="trendChart"></canvas></div>
-      </div>
-
-      <div id="an-departments" class="tab-content" style="padding:1.25rem;">
+      <div id="an-departments" class="tab-content active" style="padding:1.25rem;">
         <h3 style="margin:0 0 0.25rem;">Visitors by College/Department</h3>
         <p style="color:#6b7280; font-size:0.875rem; margin:0 0 1rem;">Distribution across different colleges</p>
         <div style="height:400px;"><canvas id="anDeptChart"></canvas></div>
