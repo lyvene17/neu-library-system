@@ -588,6 +588,66 @@ tbody tr:hover td { background: #f8fafc; }
 .user-card .user-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
 
 /* ══════════════════════════════
+   HAMBURGER & COLLAPSED SIDEBAR
+══════════════════════════════ */
+.hamburger {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.hamburger:hover { background: var(--bg); color: var(--text); }
+.hamburger i { width: 20px; height: 20px; }
+
+/* Collapsed state */
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar.collapsed .sidebar-brand-text,
+.sidebar.collapsed .nav-item span,
+.sidebar.collapsed .logout-btn span,
+.sidebar.collapsed .brand-sub {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-brand {
+  justify-content: center;
+  padding: 14px 8px;
+}
+
+.sidebar.collapsed .hamburger {
+  margin-left: 0;
+}
+
+.sidebar.collapsed .sidebar-logo {
+  width: 36px; height: 36px;
+}
+
+.sidebar.collapsed .nav-item {
+  justify-content: center;
+  padding: 12px 8px;
+}
+
+.sidebar.collapsed .logout-btn {
+  justify-content: center;
+  padding: 12px 8px;
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: 60px;
+}
+
+/* ══════════════════════════════
    RESPONSIVE
 ══════════════════════════════ */
 @media (max-width: 1024px) {

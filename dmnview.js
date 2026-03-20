@@ -446,7 +446,14 @@ window.handleSearch = function() {
   renderLogTable(filteredVisits);
 }
 
-// ── USER TAB SWITCH ──
+// ── SIDEBAR TOGGLE ──
+window.toggleSidebar = function() {
+  const sidebar = document.getElementById("sidebar");
+  const main = document.querySelector(".main-content");
+  sidebar.classList.toggle("collapsed");
+  main.classList.toggle("sidebar-collapsed");
+  lucide.createIcons();
+}
 window.switchUserTab = function(tab, el) {
   document.querySelectorAll("#tab-users .tab-trigger").forEach(t => t.classList.remove("active"));
   document.querySelectorAll("#tab-users .tab-content").forEach(c => c.classList.remove("active"));
