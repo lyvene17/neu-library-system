@@ -249,50 +249,54 @@
     </div>
 
     <div class="card">
-      <div class="card-header" style="padding:1.25rem;">
+      <div class="card-header" style="padding:1.25rem 1.25rem 0;">
         <h3 style="margin:0;">User Directory</h3>
-        <p style="color:#6b7280; font-size:0.875rem; margin:4px 0 0;">Search and manage all registered users</p>
-        <div class="search-bar" style="margin-top:1rem;">
+        <p style="color:#6b7280; font-size:0.875rem; margin:4px 0 1rem;">Search and manage all registered users</p>
+        <div class="search-bar" style="margin-bottom:1rem;">
           <i data-lucide="search"></i>
           <input type="text" id="userSearch" placeholder="Search by name or email..." oninput="filterUsers()">
         </div>
       </div>
-      <div style="padding:0 1.25rem 1.25rem;">
-        <div id="activeUsersSection">
-          <div class="section-header green-header">
-            <i data-lucide="user-check"></i>
-            <span id="activeUsersTitle">Active Users</span>
-          </div>
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th><th>Email</th><th>Status</th><th class="text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="activeUsersBody"></tbody>
-            </table>
-          </div>
+
+      <!-- User tabs -->
+      <div class="tabs-header">
+        <button class="tab-trigger active" onclick="switchUserTab('active', this)">
+          <i data-lucide="user-check"></i>
+          <span id="activeUsersTitle">Active Users</span>
+        </button>
+        <button class="tab-trigger" onclick="switchUserTab('blocked', this)">
+          <i data-lucide="user-x"></i>
+          <span id="blockedUsersTitle">Blocked Users</span>
+        </button>
+      </div>
+
+      <div id="user-tab-active" class="tab-content active">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th><th>Email</th><th>Status</th><th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="activeUsersBody"></tbody>
+          </table>
         </div>
-        <div id="blockedUsersSection" style="margin-top:1.5rem; display:none;">
-          <div class="section-header red-header">
-            <i data-lucide="user-x"></i>
-            <span id="blockedUsersTitle">Blocked Users</span>
-          </div>
-          <div class="blocked-alert">
-            <i data-lucide="alert-circle"></i>
-            These users are currently blocked from accessing the library system.
-          </div>
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th><th>Email</th><th>Status</th><th class="text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="blockedUsersBody"></tbody>
-            </table>
-          </div>
+      </div>
+
+      <div id="user-tab-blocked" class="tab-content">
+        <div class="blocked-alert" style="margin:1rem 1.25rem 0;">
+          <i data-lucide="alert-circle"></i>
+          These users are currently blocked from accessing the library system.
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th><th>Email</th><th>Status</th><th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="blockedUsersBody"></tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -446,6 +446,15 @@ window.handleSearch = function() {
   renderLogTable(filteredVisits);
 }
 
+// ── USER TAB SWITCH ──
+window.switchUserTab = function(tab, el) {
+  document.querySelectorAll("#tab-users .tab-trigger").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll("#tab-users .tab-content").forEach(c => c.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById(`user-tab-${tab}`).classList.add("active");
+  lucide.createIcons();
+}
+
 // ── USERS ──
 async function renderUsers() {
   const body_active  = document.getElementById("activeUsersBody");
@@ -499,7 +508,7 @@ async function renderUsers() {
 
   body_active.innerHTML  = active.map(userRow).join("");
   body_blocked.innerHTML = blocked.map(userRow).join("");
-  document.getElementById("blockedUsersSection").style.display = blocked.length > 0 ? "block" : "none";
+
   lucide.createIcons();
 }
 
