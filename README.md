@@ -131,22 +131,37 @@ git clone https://github.com/lyvene17/neu-library-system.git
 
 ## Screenshots
 
-![Login](screenshots/web-view/login_web.png)
-![Register](screenshots/web-view/registr_web.png)
-![Check-in](screenshots/web-view/checkin_web.png)
-![Success](screenshots/web-view/success_checkin_web.png)
-![Dashboard](screenshots/web-view/admindashboard.png)
-![Charts](screenshots/web-view/graphs.png)
-![Visitor Logs](screenshots/web-view/visitorlogs.png)
-![User Management](screenshots/web-view/usermanagement.png)
-![User Blocked](screenshots/web-view/userIsBlocked.png)
+### Web View
 
-![Login Mobile](screenshots/mobile-view/login_mobile.jpg)
-![Register Mobile](screenshots/mobile-view/register_mobile.jpg)
-![Check-in Mobile](screenshots/mobile-view/checkin_mobile.jpg)
-![Success Mobile](screenshots/mobile-view/successCheckin.jpg)
-![Dashboard Mobile](screenshots/mobile-view/dashboard.jpg)
-![Charts Mobile](screenshots/mobile-view/graphs.jpg)
-![Visitor Logs Mobile](screenshots/mobile-view/visitorlogs.jpg)
-![User Management Mobile](screenshots/mobile-view/usermanagement.jpg)
-![User Blocked Mobile](screenshots/mobile-view/userIsBlocked.jpg)
+#### Login Page
+![Login](screenshots/web-view/login_web.png)
+
+#### Register Page
+![Register](screenshots/web-view/register_web.png)
+
+#### Check-in Form
+![Check-in](screenshots/web-view/regularUser_checkIn_web.png)
+
+#### Check-in Success
+![Success](screenshots/web-view/regularUser_success_web.png)
+
+#### Admin Dashboard
+![Dashboard](screenshots/web-view/dashboard_web.png)
+
+#### Analytics - Departments
+![Analytics Departments](screenshots/web-view/analyticsDept_web.png)
+
+#### Analytics - Purposes
+![Analytics Purposes](screenshots/web-view/analyticsprs_web.png)
+
+#### Analytics - Patterns
+![Analytics Patterns](screenshots/web-view/analyticsptrn_web.png)
+
+#### Visitor Logs
+![Visitor Logs](screenshots/web-view/visitorlogs_web.png)
+
+#### User Management
+![User Management](screenshots/web-view/usermgmt.png)
+
+#### User Blocked
+![User Blocked](screenshots/web-view/usermgmtBlocked_web.png)
